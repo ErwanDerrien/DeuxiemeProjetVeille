@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -40,18 +43,44 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final String baseUrl = 'http://localhost:8080';
   String _jwt = '';
   String name = 'visiteur';
   String role = '';
-  void _login() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      // _jwt++;
-    });
+  // void _login() {
+  //   setState(() {
+  //     // This call to setState tells the Flutter framework that something has
+  //     // changed in this State, which causes it to rerun the build method below
+  //     // so that the display can reflect the updated values. If we changed
+  //     // _counter without calling setState(), then the build method would not be
+  //     // called again, and so nothing would appear to happen.
+  //     // _jwt++;
+  //   });
+  // }
+
+  Future<http.Response> _login() {
+    return http.get(Uri.parse(baseUrl + "/user/login"));
+  }
+
+  Future<http.Response> postRequest(String email, String password) async {
+    var url = (baseUrl + "/user/login");
+
+    Map data = {'email': email, 'password': password};
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: body);
+    if (response.statusCode == 200) {
+      setState(() {
+        _jwt = response.body;
+      });
+    } else if (response.statusCode == 401) {
+      print('Unauthorized');
+    } else {
+      print('Unexpected error');
+    }
+    return response;
   }
 
   @override
@@ -100,9 +129,11 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _login,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () async {
+          postRequest('123456789@gmail.com', 'travis123');
+        },
+        tooltip: 'Login',
+        child: const Icon(Icons.person),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
