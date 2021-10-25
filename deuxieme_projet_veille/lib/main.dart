@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:jwt_decode/jwt_decode.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -72,14 +74,18 @@ class _HomeState extends State<Home> {
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"}, body: body);
     if (response.statusCode == 200) {
+      Map<String, dynamic> payload = Jwt.parseJwt(response.body);
+
       setState(() {
         _jwt = response.body;
+        name = payload['sub'];
       });
     } else if (response.statusCode == 401) {
       print('Unauthorized');
     } else {
       print('Unexpected error');
     }
+
     return response;
   }
 
