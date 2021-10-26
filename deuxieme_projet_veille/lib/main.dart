@@ -79,6 +79,7 @@ class _HomeState extends State<Home> {
       setState(() {
         _jwt = response.body;
         name = payload['sub'];
+        role = payload['role'];
       });
     } else if (response.statusCode == 401) {
       print('Unauthorized');
@@ -123,10 +124,8 @@ class _HomeState extends State<Home> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Bienvenu $name',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Text('Bienvenu $name',
+                style: Theme.of(context).textTheme.headline6),
             // Text(
             //   name,
             //   // style: Theme.of(context).textTheme.headline4,
