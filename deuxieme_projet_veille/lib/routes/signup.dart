@@ -35,6 +35,10 @@ class Signup extends StatelessWidget {
         'phone': phone,
         'password': password
       };
+
+      print('url ' + url);
+      print('data ' + data.toString());
+
       var body = json.encode(data);
 
       var response = await http.post(url,
@@ -162,7 +166,8 @@ class Signup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      test(email.text);
+                      postRequest(email.text, lastName.text, firstName.text,
+                          phone.text, password.text);
                     },
                     child: const Text(
                       'Soumettre',
