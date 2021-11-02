@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/signup_role.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
@@ -15,18 +16,28 @@ class Home extends StatefulWidget {
   final String jwt;
 
   @override
-  State<Home> createState() => _HomeState(jwt: jwt);
+  State<Home> createState() => _HomeState(token: jwt);
 }
 
 class _HomeState extends State<Home> {
-  String jwt = '';
+  String token = '';
   String name = 'visiteur';
   String role = '';
 
-  _HomeState({this.jwt = ''});
+  _HomeState({this.token = ''});
+
+  void decodeJWT(String jwt) {
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
+
+    name = payload['sub'];
+    role = payload['role'];
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (token != '') {
+      decodeJWT(token);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -37,6 +48,7 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             Text('Bienvenue $name',
                 style: Theme.of(context).textTheme.headline6),
+            Text('Role $role', style: Theme.of(context).textTheme.headline6),
           ],
         ),
       ),
@@ -44,7 +56,7 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Login()),
+            MaterialPageRoute(builder: (context) => SignupRole()),
           );
         },
         tooltip: 'Login',
