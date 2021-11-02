@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/login.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
@@ -7,64 +8,83 @@ import 'dart:async';
 import 'home.dart';
 
 class Signup extends StatelessWidget {
+  late BuildContext globalContext;
+
   final String baseUrl = 'http://localhost:8080';
   String role = 'test';
 
   Signup({Key? key, this.role = ''}) : super(key: key);
 
+  void signup(String email, String lastName, String firstName, String phone,
+      String password) async {
+    final Login test = new Login();
+
+    var url = '';
+
+    if (role == 'Étudiant') {
+      url = (baseUrl + "/student/register");
+    } else if (role == 'Moniteur') {
+      url = (baseUrl + "/monitor/register");
+    } else if (role == 'SUPERVISOR') {
+      url = (baseUrl + "/superviseur/register");
+    }
+
+    Map data = {
+      'email': email,
+      'lastName': lastName,
+      'firstName': firstName,
+      'phone': phone,
+      'password': password
+    };
+
+    print('url ' + url);
+    print('data ' + data.toString());
+
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: body);
+    if (response.statusCode == 201) {
+      print('Sucess');
+    } else {
+      print('Unexpected error');
+    }
+
+    login(email, password);
+  }
+
+  void login(String email, String password) async {
+    var url = (baseUrl + "/user/login");
+
+    Map data = {'email': email, 'password': password};
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: body);
+    if (response.statusCode == 200) {
+      print('Sucess');
+    } else if (response.statusCode == 401) {
+      print('Unauthorized');
+    } else {
+      print('Unexpected error');
+    }
+
+    redirect(response.body);
+  }
+
+  void redirect(String body) {
+    Navigator.push(
+        globalContext,
+        MaterialPageRoute(
+            builder: (context) => Home(
+                  title: '',
+                  jwt: body,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('role ' + this.role);
-
-    Future<http.Response> postRequest(String email, String lastName,
-        String firstName, String phone, String password) async {
-      var url = '';
-
-      if (role == 'Étudiant') {
-        url = (baseUrl + "/student/register");
-      } else if (role == 'Moniteur') {
-        url = (baseUrl + "/monitor/register");
-      } else if (role == 'SUPERVISOR') {
-        url = (baseUrl + "/superviseur/register");
-      }
-
-      Map data = {
-        'email': email,
-        'lastName': lastName,
-        'firstName': firstName,
-        'phone': phone,
-        'password': password
-      };
-
-      print('url ' + url);
-      print('data ' + data.toString());
-
-      var body = json.encode(data);
-
-      var response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: body);
-      if (response.statusCode == 200) {
-        print('Sucess');
-      } else if (response.statusCode == 401) {
-        print('Unauthorized');
-      } else {
-        print('Unexpected error');
-      }
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Home(
-                    title: '',
-                    jwt: response.body,
-                  )));
-
-      return response;
-    }
-
-    void test(String input) {
-      print(input);
-    }
+    globalContext = context;
 
     TextEditingController email = TextEditingController()
       ..text = 'erwan1derrien@gmail.com';
@@ -166,7 +186,7 @@ class Signup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      postRequest(email.text, lastName.text, firstName.text,
+                      signup(email.text, lastName.text, firstName.text,
                           phone.text, password.text);
                     },
                     child: const Text(

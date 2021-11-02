@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Text('Bienvenue $name',
                   style: Theme.of(context).textTheme.headline6),
+              (role != '') ? Text('Role : $role') : const Text(''),
             ],
           ),
         ),

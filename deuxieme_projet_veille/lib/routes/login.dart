@@ -7,36 +7,42 @@ import 'dart:async';
 import 'home.dart';
 
 class Login extends StatelessWidget {
+  late BuildContext globalContext;
+
   final String baseUrl = 'http://localhost:8080';
+
+  void login(String email, String password) async {
+    var url = (baseUrl + "/user/login");
+
+    Map data = {'email': email, 'password': password};
+    var body = json.encode(data);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: body);
+    if (response.statusCode == 200) {
+      print('Sucess');
+    } else if (response.statusCode == 401) {
+      print('Unauthorized');
+    } else {
+      print('Unexpected error');
+    }
+
+    redirect(response.body);
+  }
+
+  void redirect(String body) {
+    Navigator.push(
+        globalContext,
+        MaterialPageRoute(
+            builder: (context) => Home(
+                  title: '',
+                  jwt: body,
+                )));
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<http.Response> postRequest(String email, String password) async {
-      var url = (baseUrl + "/user/login");
-
-      Map data = {'email': email, 'password': password};
-      var body = json.encode(data);
-
-      var response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: body);
-      if (response.statusCode == 200) {
-        print('Sucess');
-      } else if (response.statusCode == 401) {
-        print('Unauthorized');
-      } else {
-        print('Unexpected error');
-      }
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Home(
-                    title: '',
-                    jwt: response.body,
-                  )));
-
-      return response;
-    }
+    globalContext = context;
 
     TextEditingController email = TextEditingController()
       ..text = '123456789@gmail.com';
@@ -110,7 +116,7 @@ class Login extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      postRequest(email.text, password.text);
+                      login(email.text, password.text);
                     },
                     child: const Text(
                       'Connexion',
