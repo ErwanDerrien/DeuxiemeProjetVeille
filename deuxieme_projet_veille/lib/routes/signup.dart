@@ -16,19 +16,25 @@ class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
     print('role ' + this.role);
 
-    Future<http.Response> postRequest(String email, String password) async {
+    Future<http.Response> postRequest(String email, String lastName,
+        String firstName, String phone, String password) async {
       var url = '';
 
-      if (role == 'STUDENT') {
+      if (role == 'Étudiant') {
         url = (baseUrl + "/student/register");
-      } else if (role == 'MONITOR') {
+      } else if (role == 'Moniteur') {
         url = (baseUrl + "/monitor/register");
       } else if (role == 'SUPERVISOR') {
-        url = (baseUrl + "/supervisor/register");
+        url = (baseUrl + "/superviseur/register");
       }
 
-      Map data = {'email': email, 'password': password};
-      //encode Map to JSON
+      Map data = {
+        'email': email,
+        'lastName': lastName,
+        'firstName': firstName,
+        'phone': phone,
+        'password': password
+      };
       var body = json.encode(data);
 
       var response = await http.post(url,
@@ -52,18 +58,26 @@ class Signup extends StatelessWidget {
       return response;
     }
 
+    void test(String input) {
+      print(input);
+    }
+
     TextEditingController email = TextEditingController()
-      ..text = '123456789@gmail.com';
+      ..text = 'erwan1derrien@gmail.com';
     TextEditingController password = TextEditingController()
-      ..text = 'travis123';
+      ..text = 'bonjoursoir';
+    TextEditingController lastName = TextEditingController()..text = 'Derrien';
+    TextEditingController firstName = TextEditingController()..text = 'Erwan';
+    TextEditingController phone = TextEditingController()
+      ..text = '514-123-4567';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inscription'),
+        title: Text('Inscription ' + role),
       ),
       body: Center(
           child: Container(
-        height: 228.0,
+        height: 445.0,
         width: 400.0,
         child: Column(
           children: <Widget>[
@@ -80,6 +94,31 @@ class Signup extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: TextFormField(
+                controller: lastName,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Prenom'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: firstName,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Nom'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: phone,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Téléphone'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                obscureText: true,
                 controller: password,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), labelText: 'Mot de passe'),
@@ -93,7 +132,9 @@ class Signup extends StatelessWidget {
                   height: 30,
                   width: 100,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () {
@@ -107,7 +148,7 @@ class Signup extends StatelessWidget {
                     },
                     child: const Text(
                       'Quitter',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),
                 ),
@@ -121,10 +162,10 @@ class Signup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      postRequest('123456789@gmail.com', 'travis123');
+                      test(email.text);
                     },
                     child: const Text(
-                      'Connexion',
+                      'Soumettre',
                       style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),

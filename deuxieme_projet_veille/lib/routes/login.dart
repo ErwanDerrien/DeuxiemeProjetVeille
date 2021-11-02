@@ -15,7 +15,6 @@ class Login extends StatelessWidget {
       var url = (baseUrl + "/user/login");
 
       Map data = {'email': email, 'password': password};
-      //encode Map to JSON
       var body = json.encode(data);
 
       var response = await http.post(url,
@@ -49,13 +48,13 @@ class Login extends StatelessWidget {
         title: const Text('Connexion'),
       ),
       body: Center(
-          child: Container(
+          child: SizedBox(
         height: 228.0,
         width: 400.0,
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: email,
                 decoration: const InputDecoration(
@@ -65,9 +64,10 @@ class Login extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: password,
+                obscureText: true,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), labelText: 'Mot de passe'),
               ),
@@ -80,7 +80,9 @@ class Login extends StatelessWidget {
                   height: 30,
                   width: 100,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () {
@@ -94,7 +96,7 @@ class Login extends StatelessWidget {
                     },
                     child: const Text(
                       'Quitter',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),
                 ),
@@ -108,7 +110,7 @@ class Login extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      postRequest('123456789@gmail.com', 'travis123');
+                      postRequest(email.text, password.text);
                     },
                     child: const Text(
                       'Connexion',

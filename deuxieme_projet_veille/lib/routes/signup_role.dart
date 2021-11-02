@@ -11,8 +11,7 @@ class SignupRole extends StatefulWidget {
 }
 
 class _SignupRole extends State<SignupRole> {
-  String role = 'STUDENT';
-  String dropdownValue = 'Étudiant';
+  String role = 'Étudiant';
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class _SignupRole extends State<SignupRole> {
         child: Column(
           children: <Widget>[
             DropdownButton<String>(
-              value: dropdownValue,
+              value: role,
               icon: const Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -38,14 +37,7 @@ class _SignupRole extends State<SignupRole> {
               ),
               onChanged: (String? newValue) {
                 setState(() {
-                  dropdownValue = newValue!;
-                  if (role == 'Étudiant') {
-                    role = 'STUDENT';
-                  } else if (role == 'Moniteur') {
-                    role = 'MONITOR';
-                  } else if (role == 'Superviseur') {
-                    role = 'SUPERVISOR';
-                  }
+                  role = newValue!;
                 });
               },
               items: <String>['Étudiant', 'Moniteur', 'Superviseur']
@@ -56,6 +48,9 @@ class _SignupRole extends State<SignupRole> {
                 );
               }).toList(),
             ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 100.0),
+            ),
             Row(
               children: <Widget>[
                 Container(
@@ -64,7 +59,9 @@ class _SignupRole extends State<SignupRole> {
                   height: 30,
                   width: 100,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () {
@@ -78,7 +75,7 @@ class _SignupRole extends State<SignupRole> {
                     },
                     child: const Text(
                       'Quitter',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),
                 ),
@@ -97,12 +94,12 @@ class _SignupRole extends State<SignupRole> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Signup(
-                                      role: this.role,
+                                      role: role,
                                     )));
                       }
                     },
                     child: const Text(
-                      'Connexion',
+                      'Continuer',
                       style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
