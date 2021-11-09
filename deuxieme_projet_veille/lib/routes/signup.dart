@@ -11,14 +11,12 @@ class Signup extends StatelessWidget {
   late BuildContext globalContext;
 
   final String baseUrl = 'http://localhost:8080';
-  String role = 'test';
+  String role = '';
 
   Signup({Key? key, this.role = ''}) : super(key: key);
 
   void signup(String email, String lastName, String firstName, String phone,
       String password) async {
-    final Login test = new Login();
-
     var url = '';
 
     if (role == 'Étudiant') {
@@ -36,9 +34,6 @@ class Signup extends StatelessWidget {
       'phone': phone,
       'password': password
     };
-
-    print('url ' + url);
-    print('data ' + data.toString());
 
     var body = json.encode(data);
 

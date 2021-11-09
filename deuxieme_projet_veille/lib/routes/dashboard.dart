@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({Key? key, required this.token, required this.role})
+  const Dashboard({Key? key, required this.token, required this.role})
       : super(key: key);
 
   final String token;
@@ -14,17 +14,29 @@ class Dashboard extends StatefulWidget {
 }
 
 class _Dashboard extends State<Dashboard> {
-  _Dashboard({token, role});
-
   String token = '';
   String role = '';
+
+  _Dashboard({required this.token, required this.role});
 
   @override
   Widget build(BuildContext context) {
     if (role == 'STUDENT') {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Dashboard'),
+          title: const Text('Dashboard Etudiant'),
+        ),
+      );
+    } else if (role == 'MONITOR') {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Dashboard Moniteur'),
+        ),
+      );
+    } else if (role == 'SUPERVISOR') {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Dashboard Moniteur'),
         ),
       );
     } else {

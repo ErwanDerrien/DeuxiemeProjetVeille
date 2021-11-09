@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/dashboard.dart';
 import 'package:deuxieme_projet_veille/routes/signup_role.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -10,12 +11,13 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key, required this.title, this.jwt = ''}) : super(key: key);
+  const Home({Key? key, required this.title, this.jwt = ''}) : super(key: key);
 
   final String title;
   final String jwt;
 
   @override
+  // ignore: no_logic_in_create_state
   State<Home> createState() => _HomeState(token: jwt);
 }
 
@@ -33,8 +35,17 @@ class _HomeState extends State<Home> {
     role = payload['role'];
   }
 
+  void logout() {
+    setState(() {
+      token = '';
+      name = 'visiteur';
+      role = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(role);
     if (token != '') {
       decodeJWT(token);
     }
@@ -58,35 +69,66 @@ class _HomeState extends State<Home> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: FloatingActionButton(
-                  heroTag: "btn1",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignupRole()),
-                    );
-                  },
-                  tooltip: 'Incription',
-                  child: const Icon(Icons.person_add),
+              if (role == '')
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: FloatingActionButton(
+                    heroTag: "btn1",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignupRole()),
+                      );
+                    },
+                    tooltip: 'Incription',
+                    child: const Icon(Icons.person_add),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: FloatingActionButton(
-                  heroTag: "btn2",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  tooltip: 'Connexion',
-                  child: const Icon(Icons.login),
+              if (role == '')
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: FloatingActionButton(
+                    heroTag: "btn2",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+                    tooltip: 'Connexion',
+                    child: const Icon(Icons.login),
+                  ),
                 ),
-              ),
+              if (role != '')
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: FloatingActionButton(
+                    heroTag: "btn3",
+                    onPressed: () {
+                      logout();
+                    },
+                    tooltip: 'Deconnexion',
+                    child: const Icon(Icons.logout),
+                  ),
+                ),
+              if (role != '')
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: FloatingActionButton(
+                    heroTag: "btn4",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Dashboard(token: token, role: role)),
+                      );
+                    },
+                    tooltip: 'Dashboard',
+                    child: const Icon(Icons.dashboard),
+                  ),
+                ),
             ],
           ),
         ));
