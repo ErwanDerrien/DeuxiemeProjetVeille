@@ -97,7 +97,6 @@ class Signup extends StatelessWidget {
       ),
       body: Center(
           child: SizedBox(
-        // height: 445.0,
         height: 534,
         width: 400.0,
         child: Column(
