@@ -23,7 +23,7 @@ class Signup extends StatelessWidget {
       url = (baseUrl + "/student/register");
     } else if (role == 'Moniteur') {
       url = (baseUrl + "/monitor/register");
-    } else if (role == 'SUPERVISOR') {
+    } else if (role == 'Superviseur') {
       url = (baseUrl + "/superviseur/register");
     }
 
@@ -89,19 +89,21 @@ class Signup extends StatelessWidget {
     TextEditingController firstName = TextEditingController()..text = 'Erwan';
     TextEditingController phone = TextEditingController()
       ..text = '514-123-4567';
+    TextEditingController company = TextEditingController()..text = 'Umaknow';
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Inscription ' + role),
       ),
       body: Center(
-          child: Container(
-        height: 445.0,
+          child: SizedBox(
+        // height: 445.0,
+        height: 534,
         width: 400.0,
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: email,
                 decoration: const InputDecoration(
@@ -111,7 +113,7 @@ class Signup extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: lastName,
                 decoration: const InputDecoration(
@@ -119,7 +121,7 @@ class Signup extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: firstName,
                 decoration: const InputDecoration(
@@ -127,7 +129,7 @@ class Signup extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: phone,
                 decoration: const InputDecoration(
@@ -135,7 +137,7 @@ class Signup extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 obscureText: true,
                 controller: password,
@@ -143,6 +145,15 @@ class Signup extends StatelessWidget {
                     border: OutlineInputBorder(), labelText: 'Mot de passe'),
               ),
             ),
+            if (role == 'Moniteur')
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: company,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Compagnie'),
+                ),
+              ),
             Row(
               children: <Widget>[
                 Container(
@@ -160,7 +171,7 @@ class Signup extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => Home(
+                              builder: (_) => const Home(
                                     title: '',
                                     jwt: '',
                                   )));
