@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/liste_offers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,15 @@ class _Dashboard extends State<Dashboard> {
                     color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ListOffers(
+                                  token: token,
+                                  offers: [],
+                                )));
+                  },
                   child: const Text(
                     'Voir toutes les offres de stage',
                     style: TextStyle(
