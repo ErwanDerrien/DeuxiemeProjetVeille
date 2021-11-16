@@ -37,7 +37,7 @@ class _ListOffersState extends State<ListOffers> {
   }
 
   void getOffers() async {
-    // String studentEmail = decodeJWTEmail(token);
+    String studentEmail = decodeJWTEmail(token);
     var url = (baseUrl + '/studentInternshipOffers');
 
     response = await http.get(
@@ -51,7 +51,10 @@ class _ListOffersState extends State<ListOffers> {
 
     for (var offer in responseJson) {
       setState(() {
-        offers.add(StudentOffer.fromJson(offer));
+        StudentOffer newOffer = StudentOffer.fromJson(offer);
+        if (!newOffer.hasAlreadyApplied) {
+          offers.add(newOffer);
+        }
       });
     }
   }
@@ -66,6 +69,7 @@ class _ListOffersState extends State<ListOffers> {
         'Authorization': 'Bearer ' + token,
       },
     );
+
     setState(() {
       offers.remove(offers[index]);
     });
@@ -79,6 +83,23 @@ class _ListOffersState extends State<ListOffers> {
 
   @override
   Widget build(BuildContext context) {
+    if (offers.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Liste Offres'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Vous n\'avez aucune offre',
+                  style: Theme.of(context).textTheme.headline6),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Liste Offres'),
@@ -91,7 +112,6 @@ class _ListOffersState extends State<ListOffers> {
               return Container(
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.all(20),
-                  // height: 50,
                   color: Colors.grey,
                   child: Column(
                     children: [

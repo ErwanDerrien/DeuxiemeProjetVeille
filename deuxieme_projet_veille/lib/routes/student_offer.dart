@@ -12,6 +12,7 @@ class StudentOffer {
   String limitDateToApply;
   double minSalary;
   double maxSalary;
+  bool hasAlreadyApplied;
 
   StudentOffer(
       this.id,
@@ -22,7 +23,8 @@ class StudentOffer {
       this.endingDate,
       this.limitDateToApply,
       this.minSalary,
-      this.maxSalary);
+      this.maxSalary,
+      this.hasAlreadyApplied);
 
   factory StudentOffer.fromJson(dynamic json) {
     return StudentOffer(
@@ -35,6 +37,7 @@ class StudentOffer {
       json['limitDateToApply'] as String,
       json['minSalary'] as double,
       json['maxSalary'] as double,
+      json['hasAlreadyApplied'] as bool,
     );
   }
 
@@ -81,5 +84,9 @@ class StudentOffer {
 
   String getDescription() {
     return description;
+  }
+
+  bool getListEmailInterestedStudents() {
+    return hasAlreadyApplied;
   }
 }
