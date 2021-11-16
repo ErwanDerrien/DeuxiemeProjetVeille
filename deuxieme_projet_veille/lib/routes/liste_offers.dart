@@ -67,10 +67,17 @@ class _ListOffersState extends State<ListOffers> {
             itemCount: offers.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                height: 50,
-                color: Colors.yellow,
-                child: Center(child: Text('Title ${offers[index].getTitle()}')),
-              );
+                  margin: const EdgeInsets.all(10),
+                  height: 50,
+                  color: Colors.grey,
+                  child: Column(
+                    children: [
+                      Padding(
+                          child: Text(offers[index].getTitle()),
+                          padding: const EdgeInsets.all(5)),
+                      Text(offers[index].getCompanyName()),
+                    ],
+                  ));
             }),
       )),
     );

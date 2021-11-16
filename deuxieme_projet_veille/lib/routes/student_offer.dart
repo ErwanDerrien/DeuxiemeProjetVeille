@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class StudentOffer {
@@ -40,6 +42,17 @@ class StudentOffer {
   }
 
   String getTitle() {
+    return getFixedTitle();
+  }
+
+  String getFixedTitle() {
+    if (title.contains('Ã©')) {
+      title = title.replaceAll('Ã©', 'é');
+    }
     return title;
+  }
+
+  String getCompanyName() {
+    return companyName;
   }
 }
