@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class StudentOffer {
+  String id;
   String title;
   String companyName;
   String description;
@@ -13,6 +14,7 @@ class StudentOffer {
   double maxSalary;
 
   StudentOffer(
+      this.id,
       this.title,
       this.companyName,
       this.description,
@@ -24,6 +26,7 @@ class StudentOffer {
 
   factory StudentOffer.fromJson(dynamic json) {
     return StudentOffer(
+      json['id'] as String,
       json['title'] as String,
       json['companyName'] as String,
       json['description'],
@@ -41,6 +44,10 @@ class StudentOffer {
     return '{ $companyName, }';
   }
 
+  String getId() {
+    return id;
+  }
+
   String getTitle() {
     return getFixedTitle();
   }
@@ -54,5 +61,25 @@ class StudentOffer {
 
   String getCompanyName() {
     return companyName;
+  }
+
+  String getBeginningDate() {
+    return beginningDate;
+  }
+
+  String getEndingDate() {
+    return endingDate;
+  }
+
+  String getMinSalary() {
+    return minSalary.toString();
+  }
+
+  String getMaxSalary() {
+    return maxSalary.toString();
+  }
+
+  String getDescription() {
+    return description;
   }
 }

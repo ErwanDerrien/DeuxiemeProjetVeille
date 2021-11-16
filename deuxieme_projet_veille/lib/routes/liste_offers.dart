@@ -5,6 +5,7 @@ import 'package:deuxieme_projet_veille/routes/student_offer.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 
 class ListOffers extends StatefulWidget {
   ListOffers({Key? key, required this.token, required this.offers})
@@ -30,7 +31,13 @@ class _ListOffersState extends State<ListOffers> {
 
   final String baseUrl = 'http://localhost:8080/internshipOffer';
 
+  String decodeJWTEmail(String jwt) {
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
+    return payload['sub'];
+  }
+
   void getOffers() async {
+    // String studentEmail = decodeJWTEmail(token);
     var url = (baseUrl + '/studentInternshipOffers');
 
     response = await http.get(
@@ -49,6 +56,21 @@ class _ListOffersState extends State<ListOffers> {
     }
   }
 
+  void appliquer(int index) async {
+    String offerId = offers[index].getId();
+    var url = (baseUrl + '/apply/$offerId');
+
+    response = await http.patch(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Authorization': 'Bearer ' + token,
+      },
+    );
+    setState(() {
+      offers.remove(offers[index]);
+    });
+  }
+
   @override
   void initState() {
     getOffers();
@@ -63,19 +85,94 @@ class _ListOffersState extends State<ListOffers> {
       ),
       body: (Center(
         child: ListView.builder(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(20),
             itemCount: offers.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                  margin: const EdgeInsets.all(10),
-                  height: 50,
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
+                  // height: 50,
                   color: Colors.grey,
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                offers[index].getCompanyName(),
+                                style: DefaultTextStyle.of(context).style.apply(
+                                      fontSizeFactor: 2.0,
+                                      color: Colors.white,
+                                    ),
+                              )),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.blueGrey)),
+                                    onPressed: () {
+                                      appliquer(index);
+                                    },
+                                    child: const Text(
+                                      'APPLIQUER',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(75, 0, 0, 0))),
+                        ],
+                      ),
                       Padding(
-                          child: Text(offers[index].getTitle()),
-                          padding: const EdgeInsets.all(5)),
-                      Text(offers[index].getCompanyName()),
+                          child: Text(
+                            offers[index].getTitle(),
+                            style: DefaultTextStyle.of(context)
+                                .style
+                                .apply(fontSizeFactor: 1.5),
+                          ),
+                          padding: const EdgeInsets.all(10)),
+                      Row(
+                        children: [
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  child: Text(
+                                      'Debut : ${offers[index].getBeginningDate()}'),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 10, 0, 0))),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                  child: Text(
+                                      'Fin : ${offers[index].getEndingDate()}'),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(50, 0, 0, 0))),
+                        ],
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                              child: Text(
+                                  'Date limite d\'application : ${offers[index].getBeginningDate()}'),
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0))),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                              child: Text(
+                                  'Taux horaire : ${offers[index].getBeginningDate()}'),
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0))),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                              child: Text(
+                                  'Description : ${offers[index].getDescription()}'),
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0))),
                     ],
                   ));
             }),
