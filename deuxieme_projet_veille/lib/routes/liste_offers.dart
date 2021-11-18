@@ -116,6 +116,7 @@ class _ListOffersState extends State<ListOffers> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                               alignment: Alignment.centerLeft,
