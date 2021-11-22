@@ -79,10 +79,11 @@ class Login extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 50.0),
+                      vertical: 10.0, horizontal: 25.0),
                   height: 30,
                   width: 100,
                   decoration: BoxDecoration(
@@ -108,7 +109,7 @@ class Login extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 50.0),
+                      vertical: 10.0, horizontal: 25.0),
                   height: 30,
                   width: 100,
                   decoration: BoxDecoration(

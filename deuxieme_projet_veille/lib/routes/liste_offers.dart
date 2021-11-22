@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:deuxieme_projet_veille/routes/student_offer.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 
+// ignore: must_be_immutable
 class ListOffers extends StatefulWidget {
   ListOffers({Key? key, required this.token, required this.offers})
       : super(key: key);
@@ -37,7 +36,6 @@ class _ListOffersState extends State<ListOffers> {
   }
 
   void getOffers() async {
-    String studentEmail = decodeJWTEmail(token);
     var url = (baseUrl + '/studentInternshipOffers');
 
     response = await http.get(
@@ -159,6 +157,7 @@ class _ListOffersState extends State<ListOffers> {
                           ),
                           padding: const EdgeInsets.all(10)),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                               alignment: Alignment.centerLeft,
@@ -173,7 +172,7 @@ class _ListOffersState extends State<ListOffers> {
                                   child: Text(
                                       'Fin : ${offers[index].getEndingDate()}'),
                                   padding:
-                                      const EdgeInsets.fromLTRB(50, 0, 0, 0))),
+                                      const EdgeInsets.fromLTRB(0, 10, 0, 0))),
                         ],
                       ),
                       Align(

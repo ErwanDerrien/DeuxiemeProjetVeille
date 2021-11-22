@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/file_upload.dart';
 import 'package:deuxieme_projet_veille/routes/liste_offers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _Dashboard extends State<Dashboard> {
                         MaterialPageRoute(
                             builder: (_) => ListOffers(
                                   token: token,
-                                  offers: [],
+                                  offers: const [],
                                 )));
                   },
                   child: const Text(
@@ -65,7 +66,14 @@ class _Dashboard extends State<Dashboard> {
                     color: Colors.grey[500],
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FileUpload(
+                                  token: token,
+                                )));
+                  },
                   child: const Text(
                     'Téléverser son CV',
                     style: TextStyle(color: Colors.white, fontSize: 16),

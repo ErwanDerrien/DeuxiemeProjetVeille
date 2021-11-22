@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-
 class StudentOffer {
   String id;
   String title;
@@ -43,7 +39,6 @@ class StudentOffer {
 
   @override
   String toString() {
-    // return '{ $title, $companyName, $description, $beginningDate, $endingDate, $limitDateToApply, $minSalary, $maxSalary }';
     return '{ $companyName, }';
   }
 
