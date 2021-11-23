@@ -1,3 +1,4 @@
+import 'package:deuxieme_projet_veille/routes/add_offer.dart';
 import 'package:deuxieme_projet_veille/routes/file_upload.dart';
 import 'package:deuxieme_projet_veille/routes/liste_offers.dart';
 import 'package:flutter/cupertino.dart';
@@ -127,7 +128,14 @@ class _Dashboard extends State<Dashboard> {
                     color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddOffer(
+                                  token: token,
+                                )));
+                  },
                   child: const Text(
                     'Ajouter une offre de stage',
                     style: TextStyle(
@@ -157,6 +165,18 @@ class _Dashboard extends State<Dashboard> {
                   onPressed: () {},
                   child: const Text(
                     'Évaluer un stagiaire',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey[700],
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Contacter un étudiant',
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),

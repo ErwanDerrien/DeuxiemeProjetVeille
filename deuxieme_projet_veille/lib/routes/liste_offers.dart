@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:deuxieme_projet_veille/routes/student_offer.dart';
+import 'package:deuxieme_projet_veille/routes/models/offer_model.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
@@ -11,7 +11,7 @@ class ListOffers extends StatefulWidget {
       : super(key: key);
 
   final String token;
-  List<StudentOffer> offers = [];
+  List<Offer> offers = [];
 
   @override
   // ignore: no_logic_in_create_state
@@ -26,7 +26,7 @@ class _ListOffersState extends State<ListOffers> {
   var response;
   var responseJson;
 
-  List<StudentOffer> offers = [];
+  List<Offer> offers = [];
 
   final String baseUrl = 'http://localhost:8080/internshipOffer';
 
@@ -49,7 +49,7 @@ class _ListOffersState extends State<ListOffers> {
 
     for (var offer in responseJson) {
       setState(() {
-        StudentOffer newOffer = StudentOffer.fromJson(offer);
+        Offer newOffer = Offer.fromJson(offer);
         if (!newOffer.hasAlreadyApplied) {
           offers.add(newOffer);
         }

@@ -1,4 +1,4 @@
-class StudentOffer {
+class Offer {
   String id;
   String title;
   String companyName;
@@ -10,7 +10,7 @@ class StudentOffer {
   double maxSalary;
   bool hasAlreadyApplied;
 
-  StudentOffer(
+  Offer(
       this.id,
       this.title,
       this.companyName,
@@ -22,8 +22,8 @@ class StudentOffer {
       this.maxSalary,
       this.hasAlreadyApplied);
 
-  factory StudentOffer.fromJson(dynamic json) {
-    return StudentOffer(
+  factory Offer.fromJson(dynamic json) {
+    return Offer(
       json['id'] as String,
       json['title'] as String,
       json['companyName'] as String,

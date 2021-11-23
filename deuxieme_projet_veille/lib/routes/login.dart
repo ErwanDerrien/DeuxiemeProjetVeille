@@ -45,9 +45,8 @@ class Login extends StatelessWidget {
     globalContext = context;
 
     TextEditingController email = TextEditingController()
-      ..text = '123456789@gmail.com';
-    TextEditingController password = TextEditingController()
-      ..text = 'travis123';
+      ..text = 'monitor@gmail.com';
+    TextEditingController password = TextEditingController()..text = 'monitor';
 
     return Scaffold(
       appBar: AppBar(
