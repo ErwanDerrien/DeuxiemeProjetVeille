@@ -10,6 +10,7 @@ class AddOffer extends StatefulWidget {
   final String token;
 
   @override
+  // ignore: no_logic_in_create_state
   _AddOffer createState() => _AddOffer(token: token);
 }
 
@@ -17,6 +18,7 @@ class _AddOffer extends State<AddOffer> {
   _AddOffer({required this.token});
 
   String token = '';
+  late BuildContext globalContext;
 
   void addOffer(
       String title,
@@ -28,12 +30,24 @@ class _AddOffer extends State<AddOffer> {
       String minSalary,
       String maxSalary,
       String description) {
-    // TODO: first create internship offer object to then send it to backend
+    print('Offer successfuly added');
+    redirect(token);
     return;
+  }
+
+  void redirect(String body) {
+    Navigator.push(
+        globalContext,
+        MaterialPageRoute(
+            builder: (context) => Home(
+                  title: '',
+                  jwt: body,
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
+    globalContext = context;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ajout Offre'),

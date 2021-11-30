@@ -82,34 +82,7 @@ class _Dashboard extends State<Dashboard> {
                 ),
               ),
             ],
-          )),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: FloatingActionButton(
-                    heroTag: "btn1",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const Home(
-                                    title: '',
-                                    jwt: '',
-                                  )));
-                    },
-                    tooltip: 'Retour accueil',
-                    child: const Icon(Icons.home),
-                  ),
-                ),
-              ],
-            ),
-          ));
+          )));
     } else if (role == 'MONITOR') {
       return Scaffold(
           appBar: AppBar(
@@ -182,34 +155,7 @@ class _Dashboard extends State<Dashboard> {
                 ),
               ),
             ],
-          )),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: FloatingActionButton(
-                    heroTag: "btn1",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const Home(
-                                    title: '',
-                                    jwt: '',
-                                  )));
-                    },
-                    tooltip: 'Retour accueil',
-                    child: const Icon(Icons.home),
-                  ),
-                ),
-              ],
-            ),
-          ));
+          )));
     } else if (role == 'SUPERVISOR') {
       return Scaffold(
           appBar: AppBar(

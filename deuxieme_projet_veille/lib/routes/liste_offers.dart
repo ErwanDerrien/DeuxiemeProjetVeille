@@ -126,26 +126,23 @@ class _ListOffersState extends State<ListOffers> {
                                     ),
                               )),
                           Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                  child: TextButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.blueGrey)),
-                                    onPressed: () {
-                                      appliquer(index);
-                                    },
-                                    child: const Text(
-                                      'APPLIQUER',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(75, 0, 0, 0))),
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.blueGrey)),
+                              onPressed: () {
+                                appliquer(index);
+                              },
+                              child: const Text(
+                                'APPLIQUER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       Padding(
